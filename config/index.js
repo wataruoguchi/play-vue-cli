@@ -35,7 +35,7 @@ module.exports = {
         '/api': {
             // API proxying: https://vuejs-templates.github.io/webpack/proxy.html
             // e.g., http://localhost:8080/api/posts/1
-            target: 'http://jsonplaceholder.typicode.com',
+            target: 'http://localhost:8084',
             changeOrigin: true,
             pathRewrite: {
                 '^/api': ''
