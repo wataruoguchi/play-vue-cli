@@ -5,10 +5,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="coffee">
+export default
   name: 'app'
-}
 </script>
 
 <style>
