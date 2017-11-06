@@ -6,6 +6,12 @@
             </div>
             <div class="col-md-10 text-left">
                 <div class="row">
+                    <polar-area
+                        :options="options"
+                        :chart-data="polarData"
+                        :height="100"></polar-area>
+                </div>
+                <div class="row">
                     <div class="col-md-4">
                         <radar-chart
                             :options="radarOptions"
@@ -73,6 +79,7 @@ import LineChart from './LineChart.coffee'
 import PieChart from './PieChart.coffee'
 import HorizontalBar from './HorizontalBar.coffee'
 import RadarChart from './RadarChart.coffee'
+import PolarArea from './PolarArea.coffee'
 
 export default
     name: 'Metrics'
@@ -81,39 +88,56 @@ export default
         PieChart: PieChart
         HorizontalBar: HorizontalBar
         RadarChart: RadarChart
+        PolarArea: PolarArea
     data: () ->
         chkMain: true
         chkOptional: false
+        polarData:
+            datasets: [
+                {
+                    borderColor: '#44ff32'
+                    backgroundColor: [
+                        '#f82221'
+                        '#3243ff'
+                        '#f82ff1'
+                        '#44ff32'
+                        '#f4f123'
+                    ]
+                    data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
+                    fill: false
+                }
+            ]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
         radar1:
             datasets: [
                 {
                     borderColor: '#44ff32'
                     label: 'Stat 1'
-                    data: [10,12,13,14,15,16]
+                    data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
                     fill: false
                 }
                 {
                     borderColor: '#f4f132'
                     label: 'Stat 1.5'
-                    data: [7,2,3,4,5,6]
+                    data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
                     fill: false
                 }
             ]
-            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5", "kpi6"]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
         radar2:
             datasets: [
                 backgroundColor: '#ff4432'
                 label: 'Stat 2'
-                data: [10,12,13,14,15,16]
+                data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
             ]
-            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5", "kpi6"]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
         radar3:
             datasets: [
                 backgroundColor: '#333244'
                 label: 'Stat 3'
-                data: [10,12,13,14,15,16]
+                data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
             ]
-            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5", "kpi6"]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
         barData:
             datasets: [
                 label: 'Stars'
