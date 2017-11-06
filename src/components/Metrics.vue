@@ -4,9 +4,23 @@
             <div class="col-md-2 bg-success">
                 nav is here
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10 text-left">
                 <div class="row">
                     <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>
+                                    <input type="checkbox" v-model="chkMain"> Main graphs
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>
+                                    <input type="checkbox" v-model="chkOptional"> Optional graphs
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-9">
                         <line-chart
@@ -28,6 +42,33 @@ export default
     components:
         LineChart: LineChart
     data: () ->
+        chkMain: true
+        chkOptional: false
+        optionalData: [
+                {
+                    label: 'Optional Data'
+                    borderColor: '#f82279'
+                    fill: false
+                    pointRadius: 1
+                    data: @array50().map (d) => @getRandomInt()
+                }
+            ]
+        mainData: [
+                {
+                    label: 'Data One'
+                    borderColor: '#f87979'
+                    fill: false
+                    pointRadius: 1
+                    data: @array50().map (d) => @getRandomInt()
+                }
+                {
+                    label: 'Data Two'
+                    borderColor: '#43ff77'
+                    fill: false
+                    pointRadius: 1
+                    data: @array50().map (d) => @getRandomInt()
+                }
+            ]
         datacollection: null
         options:
             responsive: true
@@ -37,27 +78,22 @@ export default
                 intersect: false
     mounted: () ->
         @fillData()
+    watch:
+        chkMain: () ->
+            @fillData()
+        chkOptional: () ->
+            @fillData()
     methods:
+        array50: () ->
+            (0 for x in [0..50])
         fillData: () ->
-            array50 = (0 for x in [0..50])
             @datacollection =
-                labels: array50.map (d, i) -> i
-                datasets: [
-                    {
-                        label: 'Data One'
-                        borderColor: '#f87979'
-                        fill: false
-                        pointRadius: 1
-                        data: array50.map (d) => @getRandomInt()
-                    }
-                    {
-                        label: 'Data Two'
-                        borderColor: '#43ff77'
-                        fill: false
-                        pointRadius: 1
-                        data: array50.map (d) => @getRandomInt()
-                    }
-                ]
+                labels: @array50().map (d, i) -> i
+                datasets: []
+            if @chkMain
+                @datacollection.datasets = @datacollection.datasets.concat @mainData
+            if @chkOptional
+                @datacollection.datasets = @datacollection.datasets.concat @optionalData
         getRandomInt: () ->
             Math.floor(Math.random() * (50 - 5 + 1)) + 5
 </script>
