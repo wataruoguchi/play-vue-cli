@@ -6,6 +6,26 @@
             </div>
             <div class="col-md-10 text-left">
                 <div class="row">
+                    <div class="col-md-4">
+                        <radar-chart
+                            :options="radarOptions"
+                            :chart-data="radar1"
+                            :height="300"></radar-chart>
+                    </div>
+                    <div class="col-md-4">
+                        <radar-chart
+                            :options="radarOptions"
+                            :chart-data="radar2"
+                            :height="300"></radar-chart>
+                    </div>
+                    <div class="col-md-4">
+                        <radar-chart
+                            :options="radarOptions"
+                            :chart-data="radar3"
+                            :height="300"></radar-chart>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col-xs-12">
@@ -52,6 +72,7 @@
 import LineChart from './LineChart.coffee'
 import PieChart from './PieChart.coffee'
 import HorizontalBar from './HorizontalBar.coffee'
+import RadarChart from './RadarChart.coffee'
 
 export default
     name: 'Metrics'
@@ -59,9 +80,40 @@ export default
         LineChart: LineChart
         PieChart: PieChart
         HorizontalBar: HorizontalBar
+        RadarChart: RadarChart
     data: () ->
         chkMain: true
         chkOptional: false
+        radar1:
+            datasets: [
+                {
+                    borderColor: '#44ff32'
+                    label: 'Stat 1'
+                    data: [10,12,13,14,15,16]
+                    fill: false
+                }
+                {
+                    borderColor: '#f4f132'
+                    label: 'Stat 1.5'
+                    data: [7,2,3,4,5,6]
+                    fill: false
+                }
+            ]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5", "kpi6"]
+        radar2:
+            datasets: [
+                backgroundColor: '#ff4432'
+                label: 'Stat 2'
+                data: [10,12,13,14,15,16]
+            ]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5", "kpi6"]
+        radar3:
+            datasets: [
+                backgroundColor: '#333244'
+                label: 'Stat 3'
+                data: [10,12,13,14,15,16]
+            ]
+            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5", "kpi6"]
         barData:
             datasets: [
                 label: 'Stars'
@@ -111,6 +163,15 @@ export default
                 }
             ]
         datacollection: null
+        radarOptions:
+            scale:
+                ticks:
+                    beginAtZero: true
+            maintainAspectRatio: true
+            spanGaps: false
+            elements:
+                line:
+                    tention: 0.00001
         options:
             responsive: true
             tooltips:
