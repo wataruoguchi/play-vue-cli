@@ -71,6 +71,7 @@ export default
                 5,4,3,2,1
             ]
         pieData:
+            # We could use this - https://github.com/emn178/Chart.PieceLabel.js
             datasets: [
                 data: [@getRandomInt(), @getRandomInt(), @getRandomInt()]
                 backgroundColor: [
