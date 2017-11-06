@@ -29,6 +29,17 @@
                             :height="150"></line-chart>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        Bar chart
+                    </div>
+                    <div class="col-md-6">
+                        <pie-chart
+                            :options="options"
+                            :chart-data="pieData"
+                            :height="150"></pie-chart>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -36,14 +47,30 @@
 
 <script lang="coffee">
 import LineChart from './LineChart.coffee'
+import PieChart from './PieChart.coffee'
 
 export default
     name: 'Metrics'
     components:
         LineChart: LineChart
+        PieChart: PieChart
     data: () ->
         chkMain: true
         chkOptional: false
+        pieData:
+            datasets: [
+                data: [@getRandomInt(), @getRandomInt(), @getRandomInt()]
+                backgroundColor: [
+                    '#f82221'
+                    '#3243ff'
+                    '#f82ff1'
+                ]
+            ]
+            labels: [
+                'red'
+                'blue'
+                'pink'
+            ]
         optionalData: [
                 {
                     label: 'Optional Data'
