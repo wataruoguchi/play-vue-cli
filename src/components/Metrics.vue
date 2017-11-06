@@ -31,7 +31,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        Bar chart
+                        <horizontal-bar
+                            :options="options"
+                            :chart-data="barData"
+                            :height="150"></horizontal-bar>
                     </div>
                     <div class="col-md-6">
                         <pie-chart
@@ -48,15 +51,25 @@
 <script lang="coffee">
 import LineChart from './LineChart.coffee'
 import PieChart from './PieChart.coffee'
+import HorizontalBar from './HorizontalBar.coffee'
 
 export default
     name: 'Metrics'
     components:
         LineChart: LineChart
         PieChart: PieChart
+        HorizontalBar: HorizontalBar
     data: () ->
         chkMain: true
         chkOptional: false
+        barData:
+            datasets: [
+                label: 'Stars'
+                data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
+            ]
+            labels: [
+                5,4,3,2,1
+            ]
         pieData:
             datasets: [
                 data: [@getRandomInt(), @getRandomInt(), @getRandomInt()]
