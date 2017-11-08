@@ -88,9 +88,11 @@ import PieChart from './PieChart.coffee'
 import HorizontalBar from './HorizontalBar.coffee'
 import RadarChart from './RadarChart.coffee'
 import PolarArea from './PolarArea.coffee'
+import Color from './Color.coffee'
 
 export default
     name: 'Metrics'
+    mixins: [Color]
     components:
         LineChart: LineChart
         PieChart: PieChart
@@ -218,26 +220,6 @@ export default
         chkOptional: () ->
             @fillData()
     methods:
-        color: (name, alpha) ->
-            COLORS =
-                red: '#ff6384'
-                orange: '#ff9f40'
-                yellow: '#ffcd56'
-                green: '#4bc0c0'
-                blue: '#36a2eb'
-                purple: '#9966ff'
-                grey: '#c9cbcf'
-            getRgba = (name) ->
-                result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(COLORS[name])
-                result = [result[1], result[2], result[3]]
-                result.map((c) -> parseInt(c, 16)).join(',')
-            return {
-                hex: () -> COLORS[name]
-                rgb: () ->
-                    "rgb(#{getRgba(name)})"
-                rgba: (alpha = 0.5) ->
-                    "rgba(#{getRgba(name)},#{alpha})"
-            }
         array50: () ->
             (0 for x in [0..50])
         fillData: () ->
