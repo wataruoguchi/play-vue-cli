@@ -95,13 +95,13 @@ export default
         polarData:
             datasets: [
                 {
-                    borderColor: '#44ff32'
+                    borderColor: @color('grey').rgba()
                     backgroundColor: [
-                        '#f82221'
-                        '#3243ff'
-                        '#f82ff1'
-                        '#44ff32'
-                        '#f4f123'
+                        @color('red').rgba()
+                        @color('orange').rgba()
+                        @color('yellow').rgba()
+                        @color('green').rgba()
+                        @color('blue').rgba()
                     ]
                     data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
                     fill: false
@@ -111,13 +111,13 @@ export default
         radar1:
             datasets: [
                 {
-                    borderColor: '#44ff32'
+                    borderColor: @color('red').rgba()
                     label: 'Stat 1'
                     data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
                     fill: false
                 }
                 {
-                    borderColor: '#f4f132'
+                    borderColor: @color('orange').rgba()
                     label: 'Stat 1.5'
                     data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
                     fill: false
@@ -126,14 +126,14 @@ export default
             labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
         radar2:
             datasets: [
-                backgroundColor: '#ff4432'
+                backgroundColor: @color('yellow').rgba()
                 label: 'Stat 2'
                 data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
             ]
             labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
         radar3:
             datasets: [
-                backgroundColor: '#333244'
+                backgroundColor: @color('green').rgba()
                 label: 'Stat 3'
                 data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
             ]
@@ -151,20 +151,20 @@ export default
             datasets: [
                 data: [@getRandomInt(), @getRandomInt(), @getRandomInt()]
                 backgroundColor: [
-                    '#f82221'
-                    '#3243ff'
-                    '#f82ff1'
+                    @color('red').rgba()
+                    @color('orange').rgba()
+                    @color('yellow').rgba()
                 ]
             ]
             labels: [
                 'red'
-                'blue'
-                'pink'
+                'orange'
+                'yellow'
             ]
         optionalData: [
                 {
                     label: 'Optional Data'
-                    borderColor: '#f82279'
+                    borderColor: @color('purple').rgba()
                     fill: false
                     pointRadius: 1
                     data: @array50().map (d) => @getRandomInt()
@@ -173,14 +173,14 @@ export default
         mainData: [
                 {
                     label: 'Data One'
-                    borderColor: '#f87979'
+                    borderColor: @color('red').rgba()
                     fill: false
                     pointRadius: 1
                     data: @array50().map (d) => @getRandomInt()
                 }
                 {
                     label: 'Data Two'
-                    borderColor: '#43ff77'
+                    borderColor: @color('orange').rgba()
                     fill: false
                     pointRadius: 1
                     data: @array50().map (d) => @getRandomInt()
@@ -210,6 +210,26 @@ export default
         chkOptional: () ->
             @fillData()
     methods:
+        color: (name, alpha) ->
+            COLORS =
+                red: '#ff6384'
+                orange: '#ff9f40'
+                yellow: '#ffcd56'
+                green: '#4bc0c0'
+                blue: '#36a2eb'
+                purple: '#9966ff'
+                grey: '#c9cbcf'
+            getRgba = (name) ->
+                result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(COLORS[name])
+                result = [result[1], result[2], result[3]]
+                result.map((c) -> parseInt(c, 16)).join(',')
+            return {
+                hex: () -> COLORS[name]
+                rgb: () ->
+                    "rgb(#{getRgba(name)})"
+                rgba: (alpha = 0.5) ->
+                    "rgba(#{getRgba(name)},#{alpha})"
+            }
         array50: () ->
             (0 for x in [0..50])
         fillData: () ->
