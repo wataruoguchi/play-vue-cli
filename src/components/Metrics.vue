@@ -6,10 +6,18 @@
             </div>
             <div class="col-md-10 text-left">
                 <div class="row">
-                    <polar-area
-                        :options="options"
-                        :chart-data="polarData"
-                        :height="100"></polar-area>
+                    <div class="col-md-6">
+                        <polar-area
+                            :options="options"
+                            :chart-data="polarData"
+                            :height="150"></polar-area>
+                    </div>
+                    <div class="col-md-6">
+                        <polar-area
+                            :options="options"
+                            :chart-data="polarData"
+                            :height="150"></polar-area>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
