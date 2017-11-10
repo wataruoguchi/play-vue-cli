@@ -9,13 +9,13 @@
                     <div class="col-md-6">
                         <polar-area
                             :options="options"
-                            :chart-data="polarData"
+                            :chart-data="polarData1"
                             :height="150"></polar-area>
                     </div>
                     <div class="col-md-6">
                         <polar-area
                             :options="options"
-                            :chart-data="polarData"
+                            :chart-data="polarData2"
                             :height="150"></polar-area>
                     </div>
                 </div>
@@ -104,22 +104,8 @@ export default
     data: () ->
         chkMain: true
         chkOptional: false
-        polarData:
-            datasets: [
-                {
-                    borderColor: @color('grey').rgba()
-                    backgroundColor: [
-                        @color('red').rgba()
-                        @color('orange').rgba()
-                        @color('yellow').rgba()
-                        @color('green').rgba()
-                        @color('blue').rgba()
-                    ]
-                    data: [@getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt(), @getRandomInt()]
-                    fill: false
-                }
-            ]
-            labels: ["kpi1", "kpi2", "kpi3", "kpi4", "kpi5"]
+        polarData1: null
+        polarData2: null
         radar1:
             datasets: [
                 {
@@ -216,12 +202,36 @@ export default
                 intersect: false
     mounted: () ->
         @fillData()
+        @getPolarData()
     watch:
         chkMain: () ->
             @fillData()
         chkOptional: () ->
             @fillData()
     methods:
+        getPolarData: _.debounce ( ->
+            axios.get('api/polardata').then (res) =>
+                polarData = res.data.map (d) =>
+                    datasets: [
+                        borderColor: @color('grey').rgba()
+                        backgroundColor: [
+                            @color('red').rgba()
+                            @color('orange').rgba()
+                            @color('yellow').rgba()
+                            @color('green').rgba()
+                            @color('blue').rgba()
+                        ]
+                        fill: false
+                        data: d.datasets.map (ds) ->
+                            ds.data
+                    ]
+                    labels: d.datasets.map (ds) ->
+                        ds.label
+                @polarData1 = polarData[0]
+                @polarData2 = polarData[1]
+            .catch (e) ->
+                @errors.push e
+            ), 1000
         array50: () ->
             (0 for x in [0..50])
         fillData: () ->
