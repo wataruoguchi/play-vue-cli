@@ -233,7 +233,7 @@ export default
                 @errors.push e
             ), 1000
         array50: () ->
-            (0 for x in [0..50])
+            (0 for x in [0..49])
         fillData: () ->
             @datacollection =
                 labels: @array50().map (d, i) -> i
