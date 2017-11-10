@@ -83,6 +83,8 @@
 </template>
 
 <script lang="coffee">
+import _ from 'lodash'
+import axios from 'axios'
 import LineChart from './LineChart.coffee'
 import PieChart from './PieChart.coffee'
 import HorizontalBar from './HorizontalBar.coffee'
