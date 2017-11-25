@@ -209,7 +209,7 @@ export default
         chkOptional: () ->
             @fillData()
     methods:
-        getPolarData: _.debounce ( ->
+        getPolarData: () ->
             axios.get('api/polardata').then (res) =>
                 polarData = res.data.map (d) =>
                     datasets: [
@@ -231,7 +231,6 @@ export default
                 @polarData2 = polarData[1]
             .catch (e) ->
                 @errors.push e
-            ), 1000
         array50: () ->
             (0 for x in [0..49])
         fillData: () ->

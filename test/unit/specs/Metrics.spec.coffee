@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Metrics from '@/components/Metrics'
+import sinon from 'sinon'
+import axios from 'axios'
+import Promise from 'bluebird'
 
 describe 'Metrics.vue', () ->
     it 'should render correct contents', () ->
@@ -47,10 +50,41 @@ describe 'Metrics.vue', () ->
             .to.equal('function')
         expect(vm.array50())
             .to.have.lengthOf(50)
-        # TODO How can we test async?
         expect(typeof vm.getPolarData)
             .to.equal('function')
         expect(vm.polarData1)
             .to.equal(null)
         expect(vm.polarData2)
             .to.equal(null)
+    it 'should receive asynchronous data', (done) ->
+        # Test async
+        polardata = [
+            { "id": 1, "datasets": [{"label": "kpi 1", "data": "12"}, {"label": "kpi 2", "data": "13"}, {"label": "kpi 3", "data": "14"}, {"label": "kpi 4", "data": "15"}, {"label": "kpi 5", "data": "16"}]},
+            { "id": 2, "datasets": [{"label": "kpi 1", "data": "12"}, {"label": "kpi 2", "data": "23"}, {"label": "kpi 3", "data": "34"}, {"label": "kpi 4", "data": "45"}, {"label": "kpi 5", "data": "56"}]}
+        ]
+        resolved = new Promise.resolve(data: polardata)
+        # Make a stub for axios, the axios API in the code won't be executed
+        stub = sinon.stub(axios, 'get').returns(resolved)
+
+        Constructor = Vue.extend(Metrics)
+        vm = new Constructor()
+
+        vm.getPolarData()
+        resolved.then(() ->
+            expect(vm.polarData1.datasets).to.be.an.instanceof(Array)
+            expect(vm.polarData1.datasets).to.have.lengthOf(1)
+            expect(vm.polarData1.datasets[0].borderColor).to.equal("rgba(201,203,207,0.5)")
+            expect(vm.polarData1.datasets[0].backgroundColor).to.have.lengthOf(5)
+            expect(vm.polarData1.datasets[0].backgroundColor[0]).to.equal("rgba(255,99,132,0.5)")
+            expect(vm.polarData1.datasets[0].fill).to.equal(false)
+            expect(vm.polarData1.datasets[0].data).to.have.lengthOf(5)
+            expect(typeof vm.polarData1.datasets[0].data[0]).to.equal("string")
+            expect(vm.polarData1.datasets[0].data[0]).to.equal("12")
+
+            expect(vm.polarData1.labels).to.be.an.instanceof(Array)
+            expect(vm.polarData1.labels).to.have.lengthOf(5)
+            expect(typeof vm.polarData1.labels[0]).to.equal('string')
+            expect(vm.polarData1.labels[0]).to.equal('kpi 1')
+            done()
+        ).catch done
+        return # WARNING: This is coffeescript, we have to NOT return resolved explicitly
