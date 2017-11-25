@@ -56,16 +56,18 @@ describe 'Metrics.vue', () ->
         expect(vm.datacollection.datasets)
             .to.eql(vm.mainData) # Asserts that the target is deeply equal to the given obj
 
-    it 'should have correct methods initialized', () ->
+    it 'should have correct methods after mounted', () ->
         Constructor = Vue.extend(Metrics)
         vm = new Constructor()
         vm.$mount()
 
+        expect(typeof vm.getPolarData)
+            .to.equal('function')
         expect(typeof vm.array50)
             .to.equal('function')
         expect(vm.array50())
             .to.have.lengthOf(50)
-        expect(typeof vm.getPolarData)
+        expect(typeof vm.fillData)
             .to.equal('function')
 
     it 'should receive asynchronous data', (done) ->
