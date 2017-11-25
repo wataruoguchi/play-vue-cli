@@ -7,7 +7,9 @@ import Promise from 'bluebird'
 describe 'Metrics.vue', () ->
     it 'should render correct contents', () ->
         Constructor = Vue.extend(Metrics)
-        vm = new Constructor().$mount()
+        vm = new Constructor()
+        vm.$mount()
+
         expect(vm.$el.querySelector('.col-md-2.bg-success').textContent)
             .to.contain('nav is here')
         expect(vm.$el.querySelector('.col-md-2.bg-success').textContent)
@@ -16,7 +18,9 @@ describe 'Metrics.vue', () ->
         # TODO cannot call like this because of mixins. Do we have to mount?
         # defaultData = Metrics.data()
         Constructor = Vue.extend(Metrics)
-        vm = new Constructor().$mount()
+        vm = new Constructor()
+        vm.$mount()
+
         expect(vm.chkMain)
             .to.equal(true)
         expect(vm.chkOptional)
@@ -45,7 +49,9 @@ describe 'Metrics.vue', () ->
             .to.eql(vm.mainData) # Asserts that the target is deeply equal to the given obj
     it 'should have correct methods initialized', () ->
         Constructor = Vue.extend(Metrics)
-        vm = new Constructor().$mount()
+        vm = new Constructor()
+        vm.$mount()
+
         expect(typeof vm.array50)
             .to.equal('function')
         expect(vm.array50())
