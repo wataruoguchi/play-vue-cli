@@ -14,18 +14,19 @@ describe 'Metrics.vue', () ->
             .to.contain('nav is here')
         expect(vm.$el.querySelector('.col-md-2.bg-success').textContent)
             .to.not.equal('nav is here') # because it contains spaces and \n
-    it 'should have correct data after mounted', () ->
-        # TODO cannot call like this because of mixins. Do we have to mount?
-        # defaultData = Metrics.data()
+
+    it 'should have correct data before mounted', () ->
+        # We can test data/methods using @color
         Constructor = Vue.extend(Metrics)
         vm = new Constructor()
-        vm.$mount()
 
         expect(vm.chkMain)
             .to.equal(true)
         expect(vm.chkOptional)
             .to.equal(false)
-        # @color has been set
+        expect(vm.polarData1).to.equal(null)
+        expect(vm.polarData2).to.equal(null)
+        expect(vm.radar1).to.have.all.keys('datasets', 'labels')
         expect(vm.mainData)
             .to.be.an.instanceof(Array)
         expect(vm.mainData)
@@ -34,6 +35,13 @@ describe 'Metrics.vue', () ->
             .to.have.all.keys('label', 'borderColor', 'fill', 'pointRadius', 'data')
         expect(vm.mainData[0]['label'])
             .to.equal('Data One')
+
+    it 'should have correct data after mounted', () ->
+        # We cannot test data/methods using @color
+        Constructor = Vue.extend(Metrics)
+        vm = new Constructor()
+        vm.$mount()
+
         # fillData is executed when $mount()
         expect(vm.datacollection)
             .to.have.all.keys('labels', 'datasets')
@@ -47,6 +55,7 @@ describe 'Metrics.vue', () ->
             .to.have.lengthOf(2)
         expect(vm.datacollection.datasets)
             .to.eql(vm.mainData) # Asserts that the target is deeply equal to the given obj
+
     it 'should have correct methods initialized', () ->
         Constructor = Vue.extend(Metrics)
         vm = new Constructor()
@@ -58,10 +67,7 @@ describe 'Metrics.vue', () ->
             .to.have.lengthOf(50)
         expect(typeof vm.getPolarData)
             .to.equal('function')
-        expect(vm.polarData1)
-            .to.equal(null)
-        expect(vm.polarData2)
-            .to.equal(null)
+
     it 'should receive asynchronous data', (done) ->
         # Test async
         polardata = [
