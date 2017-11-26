@@ -4,6 +4,7 @@
     <h2>Essential Links</h2>
     <ul>
         <li><router-link to="metrics">Metrics Example</router-link></li>
+        <li><router-link to="todo-app">TODO Example</router-link></li>
     </ul>
     <h2>Essential Links</h2>
     <ul>
