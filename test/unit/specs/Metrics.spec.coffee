@@ -7,18 +7,16 @@ import Promise from 'bluebird'
 describe 'Metrics.vue', () ->
     it 'should render correct contents', () ->
         Constructor = Vue.extend(Metrics)
-        vm = new Constructor()
-        vm.$mount()
+        vm = new Constructor().$mount()
 
         expect(vm.$el.querySelector('.col-md-2.bg-success').textContent)
             .to.contain('nav is here')
         expect(vm.$el.querySelector('.col-md-2.bg-success').textContent)
             .to.not.equal('nav is here') # because it contains spaces and \n
 
-    it 'should have correct data before mounted', () ->
-        # We can test data/methods using @color
+    it 'should have correct data', () ->
         Constructor = Vue.extend(Metrics)
-        vm = new Constructor()
+        vm = new Constructor().$mount()
 
         expect(vm.chkMain)
             .to.equal(true)
@@ -35,13 +33,6 @@ describe 'Metrics.vue', () ->
             .to.have.all.keys('label', 'borderColor', 'fill', 'pointRadius', 'data')
         expect(vm.mainData[0]['label'])
             .to.equal('Data One')
-
-    it 'should have correct data after mounted', () ->
-        # We cannot test data/methods using @color
-        Constructor = Vue.extend(Metrics)
-        vm = new Constructor()
-        vm.$mount()
-
         # fillData is executed when $mount()
         expect(vm.datacollection)
             .to.have.all.keys('labels', 'datasets')
@@ -56,10 +47,9 @@ describe 'Metrics.vue', () ->
         expect(vm.datacollection.datasets)
             .to.eql(vm.mainData) # Asserts that the target is deeply equal to the given obj
 
-    it 'should have correct methods after mounted', () ->
+    it 'should have correct methods', () ->
         Constructor = Vue.extend(Metrics)
-        vm = new Constructor()
-        vm.$mount()
+        vm = new Constructor().$mount()
 
         expect(typeof vm.getPolarData)
             .to.equal('function')
