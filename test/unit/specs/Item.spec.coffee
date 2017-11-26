@@ -1,18 +1,16 @@
 import Vue from 'vue'
 import Item from '@/components/Item'
 
-getRenderedText = (Component, propsData) ->
-    Ctor = Vue.extend(Component)
-    vm = new Ctor(propsData: propsData).$mount()
-    return vm.$el.textContent
-
 describe 'Item.vue', () ->
     it 'should render correctly', () ->
-        expect(getRenderedText(Item,
+        Constructor = Vue.extend(Item)
+        vm = new Constructor(propsData:
             item:
                 is_done: true
                 title: 'Dummy Task'
-        )).to.equal('Dummy Task')
+        ).$mount()
+        expect(vm.$el.textContent).to.equal('Dummy Task')
+        expect(vm.$el.className).to.equal('done')
 
     it 'should have correct methods', () ->
         Constructor = Vue.extend(Item)
