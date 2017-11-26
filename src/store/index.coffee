@@ -26,10 +26,6 @@ export default new Vuex.Store
             commit 'addTask', data: newItem
         doneTask: ({commit}, item) ->
             commit 'doneTask', data: item
-        spread: () ->
-            data1 = [1,2,3]
-            data2 = ["a", "b", "c"]
-            data1.push(...data2)
     mutations:
         addTask: (state, payload) ->
             state.items.push(payload.data)
