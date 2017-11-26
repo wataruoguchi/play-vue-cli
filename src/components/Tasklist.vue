@@ -7,7 +7,7 @@
                 </ul>
                 <div>
                     <input type="text" v-model="inputTitle">
-                    <button @click="addItem">Add</button>
+                    <button @click="addTask(inputTitle)">Add</button>
                 </div>
             </div>
         </div>
@@ -16,6 +16,8 @@
 
 <script lang="coffee">
 import Item from './Item.vue'
+import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import Store from '../store/index.coffee'
 
 export default
@@ -25,12 +27,10 @@ export default
         Item: Item
     data: () ->
         inputTitle: ""
-        items: @$store.state.items
+    computed:
+        mapState(['items'])
     methods:
-        addItem: () ->
-            @items.push
-                title: @inputTitle
-                is_done: false
+        mapActions(['addTask'])
 </script>
 
 <style src="bootstrap3/dist/css/bootstrap.min.css"></style>

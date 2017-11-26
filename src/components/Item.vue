@@ -1,13 +1,14 @@
 <template>
-    <li :class="{ 'done': item.is_done }" @click="done(item)">{{item.title}}</li>
+    <li :class="{ 'done': item.is_done }" @click="doneTask(item)">{{item.title}}</li>
 </template>
 
 <script lang="coffee">
+import { mapActions } from 'vuex'
+
 export default
     props: ['item']
     methods:
-        done: (item) ->
-            item.is_done = !item.is_done
+        mapActions(['doneTask'])
 </script>
 
 <style lang="scss" scoped>

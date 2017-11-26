@@ -18,3 +18,21 @@ export default new Vuex.Store
                 title: 'Task 3'
             }
         ]
+    actions:
+        addTask: ({commit}, title) ->
+            newItem =
+                title: title
+                is_done: false
+            commit 'addTask', data: newItem
+        doneTask: ({commit}, item) ->
+            commit 'doneTask', data: item
+        spread: () ->
+            data1 = [1,2,3]
+            data2 = ["a", "b", "c"]
+            data1.push(...data2)
+    mutations:
+        addTask: (state, payload) ->
+            state.items.push(payload.data)
+        doneTask: (state, payload) ->
+            index = state.items.indexOf(payload.data)
+            state.items[index].is_done = !payload.data.is_done
