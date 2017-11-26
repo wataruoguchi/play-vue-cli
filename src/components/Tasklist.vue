@@ -16,27 +16,16 @@
 
 <script lang="coffee">
 import Item from './Item.vue'
+import Store from '../store/index.coffee'
 
 export default
     name: 'Tasklist'
+    store: Store
     components:
         Item: Item
     data: () ->
         inputTitle: ""
-        items: [
-            {
-                is_done: false
-                title: 'Task 1'
-            }
-            {
-                is_done: true
-                title: 'Task 2'
-            }
-            {
-                is_done: false
-                title: 'Task 3'
-            }
-        ]
+        items: @$store.state.items
     methods:
         addItem: () ->
             @items.push
