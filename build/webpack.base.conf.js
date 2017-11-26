@@ -33,7 +33,17 @@ module.exports = {
         loader: 'coffee-loader',
         options: {
           transpile: {
-            presets: ['env', 'es2015']
+            presets: [
+              ["env", {
+                "modules": false,
+                "targets": {
+                  "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+                }
+              }],
+              "stage-2",
+              "es2015"
+            ],
+            plugins: ["transform-runtime"]
           }
         }
       },
