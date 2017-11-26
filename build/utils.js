@@ -10,6 +10,28 @@ exports.assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
+exports.scriptLoaders = function (options) {
+  options = options || {}
+
+  const coffeeLoader = {
+    loader: 'coffee-loader',
+    options: {
+      transpile: {
+        presets: ['env', 'es2015']
+      }
+    }
+  }
+
+  const jsLoader = {
+    loader: 'babel-loader'
+  }
+
+  return {
+    js: jsLoader,
+    coffee: coffeeLoader
+  }
+}
+
 exports.cssLoaders = function (options) {
   options = options || {}
 

@@ -83,6 +83,7 @@
 </template>
 
 <script lang="coffee">
+import 'es6-promise/auto'
 import axios from 'axios'
 import LineChart from './LineChart.coffee'
 import PieChart from './PieChart.coffee'

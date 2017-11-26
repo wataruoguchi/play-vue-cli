@@ -30,7 +30,12 @@ module.exports = {
     rules: [
       {
         test: /\.coffee$/,
-        loader: 'coffee-loader'
+        loader: 'coffee-loader',
+        options: {
+          transpile: {
+            presets: ['env', 'es2015']
+          }
+        }
       },
       {
         test: /\.vue$/,
