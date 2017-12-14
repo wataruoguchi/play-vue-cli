@@ -17,11 +17,11 @@
 <script lang="coffee">
 import Item from './Item.vue'
 import { mapActions, mapGetters } from 'vuex'
-import items from '../store/items.coffee'
+import Store from '../store/index'
 
 export default
     name: 'Tasklist'
-    store: items
+    store: Store
     components:
         Item: Item
     data: () ->
