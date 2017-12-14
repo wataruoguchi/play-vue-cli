@@ -23,7 +23,7 @@ export default new Vuex.Store
 
   mutations:
     ADD_TASK: (state, payload) ->
-      state.items.pish(payload.data)
+      state.items.push(payload.data)
     DONE_TASK: (state, payload) ->
       index = state.items.indexOf(payload.data)
       state.items[index].is_done = !payload.data.is_done
