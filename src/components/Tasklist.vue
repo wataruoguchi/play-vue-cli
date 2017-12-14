@@ -16,19 +16,18 @@
 
 <script lang="coffee">
 import Item from './Item.vue'
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
-import Store from '../store/index.coffee'
+import { mapActions, mapGetters } from 'vuex'
+import items from '../store/items.coffee'
 
 export default
     name: 'Tasklist'
-    store: Store
+    store: items
     components:
         Item: Item
     data: () ->
         inputTitle: ""
     computed:
-        mapState(['items'])
+        mapGetters(['items'])
     methods:
         mapActions(['addTask'])
 </script>
