@@ -1,26 +1,60 @@
-import Vue from 'vue'
+import { shallow, createLocalVue } from 'vue-test-utils'
+import Vuex from 'vuex'
+import sinon from 'sinon'
 import Item from '@/components/Item'
 
-describe 'Item.vue', () ->
-    it 'should render correctly', () ->
-        Constructor = Vue.extend(Item)
-        vm = new Constructor(propsData:
-            item:
-                is_done: true
-                title: 'Dummy Task'
-        ).$mount()
-        expect(vm.$el.textContent).to.equal('Dummy Task')
-        expect(vm.$el.className).to.equal('done')
+localVue = createLocalVue()
+localVue.use(Vuex)
 
-    it 'should have correct methods', () ->
-        Constructor = Vue.extend(Item)
-        vm = new Constructor()
-        expect(typeof vm.done)
-            .to.equal('function')
-        item = {is_done: false}
-        vm.done(item)
-        expect(item.is_done)
-            .to.equal(true)
-        vm.done(item)
-        expect(item.is_done)
-            .to.equal(false)
+describe 'Item.vue', () ->
+  actions = null
+  store = null
+
+  beforeEach(() ->
+    actions =
+      addTask: sinon.stub()
+      doneTask: sinon.stub()
+    store = new Vuex.Store(
+      state: {}
+      actions: actions
+    )
+  )
+
+  it 'renders correctly when is_done is false', () ->
+    wrapper = shallow(Item, {
+      propsData:
+        item:
+          is_done: false
+          title: 'Dummy Task'
+    })
+    expect(wrapper.vm.$el.textContent).to.equal('Dummy Task')
+    expect(wrapper.vm.$el.className).to.not.equal('done')
+
+  it 'renders correctly when is_done is true', () ->
+    wrapper = shallow(Item, {
+      propsData:
+        item:
+          is_done: true
+          title: 'Dummy Task'
+    })
+    expect(wrapper.vm.$el.textContent).to.equal('Dummy Task')
+    expect(wrapper.vm.$el.className).to.equal('done')
+
+  it 'has correct methods', () ->
+    wrapper = shallow(Item, {
+      store,
+      localVue,
+      propsData: {
+        item:
+          is_done: false
+          title: 'Dummy Task'
+      }
+    })
+    expect(typeof wrapper.vm.doneTask).to.equal('function')
+    task = wrapper.find('li')
+    expect(task.text()).to.equal('Dummy Task')
+    expect(task.hasClass('done')).to.equal(false)
+    task.trigger('click')
+    expect(actions.doneTask.calledOnce).to.equal(true)
+    task.trigger('click')
+    expect(actions.doneTask.calledTwice).to.equal(true)
