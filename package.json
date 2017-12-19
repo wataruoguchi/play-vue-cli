@@ -83,7 +83,7 @@
     "sinon": "^4.0.0",
     "sinon-chai": "^2.8.0",
     "url-loader": "^0.5.8",
-    "vue-jest": "git://github.com/wataruoguchi/vue-jest.git#6641ad3ab70377d52c95165458c0895d48b25618",
+    "vue-jest": "^1.4.0",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
