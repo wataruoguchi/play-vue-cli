@@ -17,16 +17,18 @@
 <script>
 import Task from './Task.vue'
 import { mapActions, mapGetters } from 'vuex'
-import Store from '../store/index'
+import store from '../store/index'
 
 export default {
   name: 'Tasklist',
-  store: Store,
+  store,
   components: {
     Task
   },
-  data: () => {
-    inputTitle: ""
+  data: function () {
+    return {
+      inputTitle: ""
+    }
   },
   computed: {
     ...mapGetters(['items'])

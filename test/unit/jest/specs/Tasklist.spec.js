@@ -1,9 +1,9 @@
-import { shallow, createLocalVue } from 'vue-test-utils'
+import { mount } from 'vue-test-utils'
+import Vue from 'vue'
 import Vuex from 'vuex'
 import Tasklist from '@/components/Tasklist'
 
-const localVue = createLocalVue()
-localVue.use(Vuex)
+Vue.use(Vuex)
 
 describe('Tasklist.vue', () => {
   let actions
@@ -36,7 +36,7 @@ describe('Tasklist.vue', () => {
   it('calls store action addTask when input value is input and an input event is fired', () => {
     // TODO I don't know why it doesn't work!
     // TypeError: key.charAt is not a function
-    // const wrapper = shallow(Tasklist, { store, localVue })
+    // const wrapper = mount(Tasklist, { store })
     expect(true).toBe(true)
 
     // TODO rewrite below for jest
